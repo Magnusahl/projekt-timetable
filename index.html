@@ -7,17 +7,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Spårvagn</title>
 </head>
 
-<body onload="myPlats(); setInterval('myPlats()', 20000 )">
+<body onload="myPlats(false); setInterval('myPlats(false)', 20000 )">
     
     <section class="avgang">
-        <h2>Sök Avgång</h2><br>
+        <br>
+        <h2>Åka <br> Spårvagn</h2><br>
         <input type="number" placeholder="Minuter till hållplats" id="ga"><br>
         <input type="text" placeholder="Station" id="resa"/><br>
-        <button type="button" onclick="myPlats()">Sök</button>
-        <ul id="info"></ul>
+        <br>
+        <button type="button" onclick="myPlats(true)">Sök</button>
+        <table id="info"></table>
     </section>
 </body>
 
