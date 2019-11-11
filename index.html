@@ -10,14 +10,14 @@
     <title>Document</title>
 </head>
 
-<body>
+<body onload="myPlats(); setInterval('myPlats()', 20000 )">
     
     <section class="avgang">
         <h2>Sök Avgång</h2><br>
-        <input type="text" id="resa"/>
+        <input type="number" placeholder="Minuter till hållplats" id="ga"><br>
+        <input type="text" placeholder="Station" id="resa"/><br>
         <button type="button" onclick="myPlats()">Sök</button>
-        <div id="info"></div>
-        <ul id="avgang"></ul>
+        <ul id="info"></ul>
     </section>
 </body>
 
