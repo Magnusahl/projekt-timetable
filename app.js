@@ -1,85 +1,96 @@
 var station;
 var siteId;
 var gatime;
-
+//Ladda tidigare sökning vid start
 loadData();
-function myPlats(save){
+
+function myPlats(save) {
     //Hämtar info från stations fältet
     station = document.getElementById("resa").value;
-    //Hämtar info från avstånd till stationen fältet
-    gatime = document.getElementById("ga").value;
-    if (save==true) {
+
+    if (save == true) {
         saveData();
     }
-    
-    const url = "https://cors-anywhere.herokuapp.com/https://api.sl.se/api2/typeahead.json?key=93b313c352944b7590052248617514e0&searchstring="+station+"&stationsonly=True&maxresults=1";
+    //Hämtar station när användaren söker
+    const url =
+        "https://cors-anywhere.herokuapp.com/https://api.sl.se/api2/typeahead.json?key=93b313c352944b7590052248617514e0&searchstring=" +
+        station +
+        "&stationsonly=True&maxresults=1";
     fetch(url)
-      .then((resp) => resp.json())
-      .then(function (data) {
-        let infos = data.ResponseData;
-        return infos.map(function (info) {
-            siteId = info.SiteId;
-            console.log("1");
-            myAvgang(siteId);
-            
+        .then(resp => resp.json())
+        .then(function(data) {
+            let infos = data.ResponseData;
+            return infos.map(function(info) {
+                siteId = info.SiteId;
+                console.log("1");
+                myAvgang(siteId);
+            });
         })
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .catch(function(error) {
+            console.log(error);
+        });
 }
 
 //Hämta Destination, linjenummer och tid
 function myAvgang(siteId) {
-    const span = document.getElementById('info');
+    const span = document.getElementById("info");
     //Tömmer värdet i tabellen
-    span.innerHTML = ""
-    const url = "https://cors-anywhere.herokuapp.com/https://api.sl.se/api2/realtimedeparturesV4.json?key=3b1f16fa9f144aa1aad3e9d76b06cbbe&siteid=" + siteId + "&timewindow=19";
+    span.innerHTML = "";
+    const url =
+        "https://cors-anywhere.herokuapp.com/https://api.sl.se/api2/realtimedeparturesV4.json?key=3b1f16fa9f144aa1aad3e9d76b06cbbe&siteid=" +
+        siteId +
+        "&timewindow=19";
     fetch(url)
-      .then((resp) => resp.json())
-      .then(function (data) {
-        let infos = data.ResponseData.Trams;
-        return infos.map(function (info) {
-            console.log("2");
-            //Skapa tabell
-          span.innerHTML += "<tr><td>" + info.LineNumber + "</td><td>" + info.Destination + "</td><td>"  + info.DisplayTime +"</td></tr>";
+        .then(resp => resp.json())
+        .then(function(data) {
+            let infos = data.ResponseData.Trams;
+            return infos.map(function(info) {
+                console.log("2");
+                //Skapa tabell
+                span.innerHTML +=
+                    "<tr><td>" +
+                    info.LineNumber +
+                    "</td><td>" +
+                    info.Destination +
+                    "</td><td>" +
+                    info.DisplayTime +
+                    "</td></tr>";
+            });
         })
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .catch(function(error) {
+            console.log(error);
+        });
 }
 
-//Ladda data 
+//Ladda senaste sökningen
 function loadData() {
-    const url = 'https://cors-anywhere.herokuapp.com/http://primat.se/services/data/fluhay@gmail.com-magnusA_resa.json';
+    const url =
+        "https://cors-anywhere.herokuapp.com/http://primat.se/services/data/fluhay@gmail.com-magnusA_resa.json";
     fetch(url)
-      .then((resp) => resp.json())
-      .then(function (data) {
-        let infos = data.data;
-        return infos.map(function (info) {
-          resa.value = info.stations;
-          //span2.value = info.gatime;
+        .then(resp => resp.json())
+        .then(function(data) {
+            let infos = data.data;
+            return infos.map(function(info) {
+                resa.value = info.stations;
+            });
         })
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .catch(function(error) {
+            console.log(error);
+        });
 }
 
-//Spara senaste
-    function saveData() {
-    const url = 'https://cors-anywhere.herokuapp.com/http://primat.se/services/sendform.aspx?xid=magnusA_resa&xmail=fluhay@gmail.com&stations='+station;
+//Spara senaste sökning
+function saveData() {
+    const url =
+        "https://cors-anywhere.herokuapp.com/http://primat.se/services/sendform.aspx?xid=magnusA_resa&xmail=fluhay@gmail.com&stations=" +
+        station;
     fetch(url)
-      .then((resp) => resp.json())
-      .then(function (data) {
-        let infos = data.data;
-        return infos.map(function (info) {
+        .then(resp => resp.json())
+        .then(function(data) {
+            let infos = data.data;
+            return infos.map(function(info) {});
         })
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    }
-    
+        .catch(function(error) {
+            console.log(error);
+        });
+}
