@@ -1,13 +1,15 @@
 var station;
 var siteId;
 var gatime;
+var datum = new Date();
+//var data2;
 //Ladda tidigare sökning vid start
 loadData();
 
 function myPlats(save) {
     //Hämtar info från stations fältet
     station = document.getElementById("resa").value;
-
+    //Spara sökt station
     if (save == true) {
         saveData();
     }
@@ -39,22 +41,43 @@ function myAvgang(siteId) {
     const url =
         "https://cors-anywhere.herokuapp.com/https://api.sl.se/api2/realtimedeparturesV4.json?key=3b1f16fa9f144aa1aad3e9d76b06cbbe&siteid=" +
         siteId +
-        "&timewindow=19";
+        "&timewindow=24";
     fetch(url)
         .then(resp => resp.json())
         .then(function(data) {
             let infos = data.ResponseData.Trams;
+
             return infos.map(function(info) {
+                // Datum
+                datum = new Date(Date.parse(info.ExpectedDateTime));
                 console.log("2");
-                //Skapa tabell
-                span.innerHTML +=
-                    "<tr><td>" +
-                    info.LineNumber +
-                    "</td><td>" +
-                    info.Destination +
-                    "</td><td>" +
-                    info.DisplayTime +
-                    "</td></tr>";
+                //Ta bort klocktid och bara visa minuter
+                if (info.DisplayTime.indexOf(":") > -1) {
+                    datum = new Date(Date.parse(info.ExpectedDateTime));
+
+                    min = (datum - data1) / 1000 / 60;
+
+                    info.DisplayTime = Math.floor(min) + " min";
+
+                    span.innerHTML +=
+                        "<tr><td>" +
+                        info.LineNumber +
+                        "</td><td>" +
+                        info.Destination +
+                        "</td><td>" +
+                        info.DisplayTime +
+                        "</td></tr>";
+                } else {
+                    //Skapa tabell
+                    span.innerHTML +=
+                        "<tr><td>" +
+                        info.LineNumber +
+                        "</td><td>" +
+                        info.Destination +
+                        "</td><td>" +
+                        info.DisplayTime +
+                        "</td></tr>";
+                }
             });
         })
         .catch(function(error) {
