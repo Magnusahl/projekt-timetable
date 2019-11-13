@@ -2,6 +2,7 @@ var station;
 var siteId;
 var gatime;
 var datum = new Date();
+var min;
 //var data2;
 //Ladda tidigare sökning vid start
 loadData();
@@ -41,11 +42,11 @@ function myAvgang(siteId) {
     const url =
         "https://cors-anywhere.herokuapp.com/https://api.sl.se/api2/realtimedeparturesV4.json?key=3b1f16fa9f144aa1aad3e9d76b06cbbe&siteid=" +
         siteId +
-        "&timewindow=24";
+        "&timewindow=60";
     fetch(url)
         .then(resp => resp.json())
         .then(function(data) {
-            let infos = data.ResponseData.Trams;
+            let infos = data.ResponseData.Trains;
 
             return infos.map(function(info) {
                 // Datum
@@ -61,6 +62,8 @@ function myAvgang(siteId) {
 
                     span.innerHTML +=
                         "<tr><td>" +
+                        info.GroupOfLine +
+                        "</td><td>" +
                         info.LineNumber +
                         "</td><td>" +
                         info.Destination +
@@ -71,6 +74,8 @@ function myAvgang(siteId) {
                     //Skapa tabell
                     span.innerHTML +=
                         "<tr><td>" +
+                        info.GroupOfLine +
+                        "</td><td>" +
                         info.LineNumber +
                         "</td><td>" +
                         info.Destination +
