@@ -4,16 +4,20 @@
 }
 
 body {
-    background-color: cadetblue;
+    background-color: rgb(0, 0, 0);
 }
 
 h2 {
     font-size: 55px;
     font-family: "Supermercado One", cursive;
-    color: rgb(226, 4, 4);
+    color: whitesmoke;
 }
 
 input {
+    height: 20px;
+    width: 105px;
+    border: none;
+    border-radius: 8px;
     text-align: center;
 }
 
@@ -23,8 +27,7 @@ button {
 }
 
 button:hover {
-    background-color: darkcyan;
-    background-image: url();
+    background-color: rgb(42, 42, 43);
 }
 
 .avgang {
@@ -37,9 +40,10 @@ table {
     font-size: 35px;
     font-family: "Anton", sans-serif;
     width: 100%;
-    color: rgb(209, 2, 2);
+    color: whitesmoke;
 }
 
 td {
-    border-bottom: 1px solid darkcyan;
+    font-size: 25px;
+    border-bottom: 1px solid rgb(252, 252, 252);
 }
