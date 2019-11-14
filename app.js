@@ -41,7 +41,7 @@ function myPlats(save) {
 //Hämta Destination, linjenummer och tid
 function myAvgang(siteId) {
     const span = document.getElementById("info");
-
+    let min =0;
     //Tömmer värdet i tabellen
     span.innerHTML = "";
     const url =
@@ -57,15 +57,14 @@ function myAvgang(siteId) {
                 // Datum
                 data1 = new Date(Date.parse(info.ExpectedDateTime));
                 console.log("2");
-
+                min = (data1 - datum) / 1000 / 60;
                 //Ta bort klocktid och bara visa minuter
                 if (info.DisplayTime.indexOf(":") > -1) {
                     data1 = new Date(Date.parse(info.ExpectedDateTime));
-                    min = (data1 - datum) / 1000 / 60;
+                    
                     info.DisplayTime = Math.floor(min) + " min";
-
-                    //Skapa tabell
-                    span.innerHTML +=
+                    
+                        span.innerHTML +=
                         "<tr><td>" +
                         info.GroupOfLine +
                         "</td><td>" +
@@ -75,7 +74,10 @@ function myAvgang(siteId) {
                         "</td><td>" +
                         info.DisplayTime +
                         "</td></tr>";
-                } else {
+                    
+                    //Skapa tabell
+                   
+                } else  {
                     //Skapa tabell
                     span.innerHTML +=
                         "<tr><td>" +
