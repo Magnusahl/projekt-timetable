@@ -1,7 +1,6 @@
-var station;
-var siteId;
-var gatime;
-var datum = new Date();
+var station; //Få fram station vid sökningen i api
+var siteId; 
+var datum = new Date(); //Få fram dagens datum
 var min;
 var data1;
 
@@ -47,7 +46,7 @@ function myAvgang(siteId) {
     const url =
         "https://cors-anywhere.herokuapp.com/https://api.sl.se/api2/realtimedeparturesV4.json?key=3b1f16fa9f144aa1aad3e9d76b06cbbe&siteid=" +
         siteId +
-        "&timewindow=30";
+        "&timewindow=45";
     fetch(url)
         .then(resp => resp.json())
         .then(function(data) {
@@ -58,13 +57,14 @@ function myAvgang(siteId) {
                 data1 = new Date(Date.parse(info.ExpectedDateTime));
                 console.log("2");
                 min = (data1 - datum) / 1000 / 60;
+
                 //Ta bort klocktid och bara visa minuter
                 if (info.DisplayTime.indexOf(":") > -1) {
                     data1 = new Date(Date.parse(info.ExpectedDateTime));
                     
                     info.DisplayTime = Math.floor(min) + " min";
-                    
-                        span.innerHTML +=
+                        if (min > 11)/* Visar bara avgångar över 11min */ {
+                            span.innerHTML +=
                         "<tr><td>" +
                         info.GroupOfLine +
                         "</td><td>" +
@@ -74,10 +74,12 @@ function myAvgang(siteId) {
                         "</td><td>" +
                         info.DisplayTime +
                         "</td></tr>";
+                        }
+                        
                     
                     //Skapa tabell
                    
-                } else  {
+                } else  if (min > 11) {
                     //Skapa tabell
                     span.innerHTML +=
                         "<tr><td>" +
