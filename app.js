@@ -1,7 +1,7 @@
-var station; //Få fram station vid sökningen i api
-var siteId; 
+var station; //Få fram station vid sökningen i api, funktion myPlats
+
 var datum = new Date(); //Få fram dagens datum
-var min;
+var min; //Minuter
 var data1;
 
 //Ladda tidigare sökning vid start
@@ -75,9 +75,6 @@ function myAvgang(siteId) {
                         info.DisplayTime +
                         "</td></tr>";
                         }
-                        
-                    
-                    //Skapa tabell
                    
                 } else  if (min > 11) {
                     //Skapa tabell
